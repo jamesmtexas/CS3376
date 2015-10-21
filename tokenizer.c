@@ -1,6 +1,6 @@
 #include "tokenizer.h"
 
-void tokenize(char *input, char output[][]) {
+void tokenize(char *input, char **output ) {
 
 	int i=0;
 	int j=0;
