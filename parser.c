@@ -52,6 +52,12 @@ void parse(char *tokens[], int n) {
 					incommand = 0;
 					break;
 				}
+			case ';':
+				printf("End statement: %s\n", tokens[i]);
+				break;
+			case '&':
+				printf("Background process: %s\n", tokens[i]);
+				break;
 			default:
 				if (!incommand) {
 					printf("Command: %s\n",tokens[i]);
