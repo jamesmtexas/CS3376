@@ -36,7 +36,7 @@ int main(int argc, char **argv) {
 			prompt[i-7] = '\0';
 			continue;
 		}
-
+		
 		if((pid=fork()) == -1) {
 			fprintf(stderr, "shell: can't fork: %s\n", strerror(errno));
 			continue;
