@@ -7,6 +7,8 @@
 #include <sysexits.h>
 #include <unistd.h>
 
+#include "parser.h"
+
 char *getinput(char *buffer, size_t buflen, char *prompt) {
 	printf(prompt);
 	return fgets(buffer, buflen, stdin);
@@ -36,12 +38,16 @@ int main(int argc, char **argv) {
 			prompt[i-7] = '\0';
 			continue;
 		}
-		
+
+		char *cmd = "ls -a";
+		char *args[1024];
+		prepforexec(cmd, args);
+
 		if((pid=fork()) == -1) {
 			fprintf(stderr, "shell: can't fork: %s\n", strerror(errno));
 			continue;
 		}
-
+		
 		else if(pid == 0) {
 			/* child */
 			execlp(buf, buf, (char *)0);
