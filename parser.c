@@ -25,13 +25,13 @@ void parse(char *tokens[], int n) {
 	int incommand = 0;
 	int numargs = 0;
 	int i;
-
 	for (i=0; i<n; i++) {
 		switch(*tokens[i]) {
 			case '|':
 				printf("Pipe: %s\n",tokens[i]);
+				//startpipe(command,args,numargs);
 				incommand = 0;
-				break;
+				continue;	
 			case '>':
 				if(*tokens[i+1] == '>') {
 					printf("File redirection: %s%s\n",tokens[i],tokens[i+1]);
@@ -74,8 +74,9 @@ void parse(char *tokens[], int n) {
 				if (!incommand) {
 					printf("Command: %s\n",tokens[i]);
 					command = tokens[i];
+					args[0] = tokens[i];
 					incommand = 1;
-					numargs = 0;
+					numargs = 1;
 					break;
 				}
 				else {
@@ -90,7 +91,7 @@ void parse(char *tokens[], int n) {
 				}
 		}
 	}
-	//runcmd(command, args, numargs);
+	runcmd(command, args, numargs);
 }
 
 void runcmd(char *cmd, char *args[], int n) {
@@ -114,6 +115,31 @@ void runcmd(char *cmd, char *args[], int n) {
 	}
 
 	if((pid=waitpid(pid, &status, 0)) < 0) {
-		fprintf(stderr, "shell: waitpiderorr: %s\n", strerror(errno));
+		fprintf(stderr, "shell: waitpiderror: %s\n", strerror(errno));
 	}
 }
+
+void startpipe(char *cmd, char *args[], int n) {
+	int fd[2];
+	pid_t pid;
+	int status;
+
+	args[n] = (char *)0;
+
+	pipe(fd);
+
+	if((pid=fork()) == -1) {
+		fprintf(stderr, "shell: can't fork%s\n", strerror(errno));
+	}
+	else if(pid == 0) {
+		dup2(0,fd[0]);
+		execvp(cmd,args);
+	}
+	else {
+		dup2(1,fd[1]);
+	}
+
+	if((pid=waitpid(pid, &status, 0)) < 0)
+		fprintf(stderr, "shell: waitpiderror: %s\n", strerror(errno));
+}
+
