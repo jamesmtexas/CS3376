@@ -91,7 +91,7 @@ void parse(char *tokens[], int n) {
 				}
 		}
 	}
-	runcmd(command, args, numargs);
+	//runcmd(command, args, numargs);
 }
 
 void runcmd(char *cmd, char *args[], int n) {
@@ -132,11 +132,11 @@ void startpipe(char *cmd, char *args[], int n) {
 		fprintf(stderr, "shell: can't fork%s\n", strerror(errno));
 	}
 	else if(pid == 0) {
-		dup2(0,fd[0]);
+		dup2(1,fd[1]);
 		execvp(cmd,args);
 	}
 	else {
-		dup2(1,fd[1]);
+		dup2(0,fd[0]);
 	}
 
 	if((pid=waitpid(pid, &status, 0)) < 0)
