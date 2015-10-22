@@ -1,27 +1,71 @@
 #include "parser.h"
 #include <unistd.h>
+#include <string.h>
+#include <stdio.h>
 
-void parse(char *input, char *tokens[]) {
-
+int tokenize(char *input, char *tokens[]) {
+	int i = 0;
+	char *token = strtok(input, " ");
+	while(token) {
+		tokens[i] = token;
+		i++;
+		token = strtok(NULL, " ");
+	}
+	return i;
 }
 
-void prepforexec(char *command, char *arguments[]) {
-
-	int argNum = 0;
-	int j = 0;
-	int i = 0;
-	for(i=0; command[i] != '\0'; i++) {
-		if(command[i] == ' ') {
-			arguments[argNum][j+1] = '\0';
-			argNum++;
-			j=0;
-		}
-		else
-		{
-			arguments[argNum][j] = command[i];
-			j++;
+void parse(char *tokens[], int n) {
+	int incommand = 0;
+	for (int i=0; i<n; i++) {
+		switch(*tokens[i]) {
+			case '|':
+				printf("Pipe: %s\n",tokens[i]);
+				incommand = 0;
+				break;
+			case '>':
+				if(*tokens[i+1] == '>') {
+					printf("File redirection: %s%s\n",tokens[i],tokens[i+1]);
+					printf("File: %s\n",tokens[i+2]);
+					i+=2;
+					incommand = 0;
+					break;
+				}
+				else {
+					printf("File redirection: %s\n",tokens[i]);
+					printf("File: %s\n",tokens[i+1]);
+					i++;
+					incommand = 0;
+					break;
+				}
+			case '<':
+				if(*tokens[i+1] == '<') {
+					printf("File redirection: %s%s\n",tokens[i],tokens[i+1]);
+					printf("File: %s\n", tokens[i+2]);
+					i+=2;
+					incommand = 0;
+					break;
+				}
+				else {
+					printf("File redirection: %s\n", tokens[i]);
+					printf("File: %s\n", tokens[i+1]);
+					i++;
+					incommand = 0;
+					break;
+				}
+			default:
+				if (!incommand) {
+					printf("Command: %s\n",tokens[i]);
+					incommand = 1;
+					break;
+				}
+				else {
+					if(*tokens[i] == '-') {
+						printf("Option: %s\n", tokens[i]);
+					}
+					else
+						printf("Argument: %s\n", tokens[i]);
+					break;
+				}
 		}
 	}
-
-	execvp(arguments[0], arguments+1);
 }

@@ -16,6 +16,7 @@ char *getinput(char *buffer, size_t buflen, char *prompt) {
 
 int main(int argc, char **argv) {
 	char buf[1024];
+	char *tokens[1024]; 
 	char prompt[1024] = "$$ ";
 	pid_t pid;
 	int status;
@@ -39,24 +40,11 @@ int main(int argc, char **argv) {
 			continue;
 		}
 
-		char *cmd = "ls -a";
-		char *args[1024];
-		prepforexec(cmd, args);
+		int numtokens;
 
-		if((pid=fork()) == -1) {
-			fprintf(stderr, "shell: can't fork: %s\n", strerror(errno));
-			continue;
-		}
-		
-		else if(pid == 0) {
-			/* child */
-			execlp(buf, buf, (char *)0);
-			fprintf(stderr, "shell: couldn't exec %s: %s\n", buf, strerror(errno));
-			exit(EX_DATAERR);
-		}
+		numtokens = tokenize(buf, tokens);
+		parse(tokens,numtokens);
 
-		if((pid=waitpid(pid, &status, 0)) < 0)
-			fprintf(stderr, "shell: waitpid error: %s\n", strerror(errno));
 	}
 	exit(EX_OK);
 }
