@@ -66,7 +66,7 @@ void parse(char *tokens[], int n) {
 				}
 				else {
 					if(*tokens[i] == '-') {
-						printf("Option: %s\n", tokens[i]);
+						printf("Options: %s\n", tokens[i]);
 					}
 					else
 						printf("Argument: %s\n", tokens[i]);
