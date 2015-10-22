@@ -24,7 +24,9 @@ void parse(char *tokens[], int n) {
 	char *args[1024];
 	int incommand = 0;
 	int numargs = 0;
-	for (int i=0; i<n; i++) {
+	int i;
+
+	for (i=0; i<n; i++) {
 		switch(*tokens[i]) {
 			case '|':
 				printf("Pipe: %s\n",tokens[i]);
