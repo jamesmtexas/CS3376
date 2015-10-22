@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
 			system("ls");
 			continue;
 		}
-		if(!strncmp(buf, "prompt", 6)) {
+		if(!strncmp(buf, "prompt \"", 8)) {
 			int i;
 			for (i = 8; buf[i] != '"'; i++) {
 				prompt[i-8] = buf[i];
