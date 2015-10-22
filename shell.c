@@ -15,6 +15,7 @@ char *getinput(char *buffer, size_t buflen, char *prompt) {
 }
 
 int main(int argc, char **argv) {
+	char *args[10] = {"-a",0};
 	char buf[1024];
 	char *tokens[1024]; 
 	char prompt[1024] = "$$ ";

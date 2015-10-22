@@ -63,7 +63,6 @@ void parse(char *tokens[], int n) {
 			case ';':
 				printf("End statement: %s\n", tokens[i]);
 				incommand = 0;
-				runcmd(command, args, numargs);
 				break;
 			case '&':
 				printf("Background process: %s\n", tokens[i]);
@@ -89,7 +88,7 @@ void parse(char *tokens[], int n) {
 				}
 		}
 	}
-	runcmd(command, args, numargs);
+	//runcmd(command, args, numargs);
 }
 
 void runcmd(char *cmd, char *args[], int n) {
@@ -98,7 +97,7 @@ void runcmd(char *cmd, char *args[], int n) {
 
 	args[n] = (char *)0;
 
-	if (n==0) {
+	if (n == 0) {
 		system(cmd);
 		return;
 	}
@@ -107,7 +106,7 @@ void runcmd(char *cmd, char *args[], int n) {
 		fprintf(stderr, "shell: can't fork: %s\n", strerror(errno));
 	}
 	else if(pid==0) {
-		execvp(cmd, args);
+		execvp(cmd,args);
 		fprintf(stderr, "shell: couldn't exec %s: %s\n", cmd, strerror(errno));
 		exit(EX_DATAERR);
 	}
