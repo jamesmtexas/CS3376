@@ -3,5 +3,6 @@
 
 int tokenize(char *input, char *tokens[]);
 void parse(char *tokens[], int n);
+void runcmd(char *cmd, char *args[], int n);
 
 #endif

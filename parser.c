@@ -1,4 +1,9 @@
 #include "parser.h"
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <errno.h>
+#include <sysexits.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <stdio.h>
@@ -15,7 +20,10 @@ int tokenize(char *input, char *tokens[]) {
 }
 
 void parse(char *tokens[], int n) {
+	char *command;
+	char *args[1024];
 	int incommand = 0;
+	int numargs = 0;
 	for (int i=0; i<n; i++) {
 		switch(*tokens[i]) {
 			case '|':
@@ -54,14 +62,19 @@ void parse(char *tokens[], int n) {
 				}
 			case ';':
 				printf("End statement: %s\n", tokens[i]);
+				incommand = 0;
+				runcmd(command, args, numargs);
 				break;
 			case '&':
 				printf("Background process: %s\n", tokens[i]);
+				incommand = 0;
 				break;
 			default:
 				if (!incommand) {
 					printf("Command: %s\n",tokens[i]);
+					command = tokens[i];
 					incommand = 1;
+					numargs = 0;
 					break;
 				}
 				else {
@@ -70,8 +83,36 @@ void parse(char *tokens[], int n) {
 					}
 					else
 						printf("Argument: %s\n", tokens[i]);
+					args[numargs] = tokens[i];
+					numargs++;
 					break;
 				}
 		}
+	}
+	runcmd(command, args, numargs);
+}
+
+void runcmd(char *cmd, char *args[], int n) {
+	pid_t pid;
+	int status;
+
+	args[n] = (char *)0;
+
+	if (n==0) {
+		system(cmd);
+		return;
+	}
+
+	if((pid=fork()) == -1) {
+		fprintf(stderr, "shell: can't fork: %s\n", strerror(errno));
+	}
+	else if(pid==0) {
+		execvp(cmd, args);
+		fprintf(stderr, "shell: couldn't exec %s: %s\n", cmd, strerror(errno));
+		exit(EX_DATAERR);
+	}
+
+	if((pid=waitpid(pid, &status, 0)) < 0) {
+		fprintf(stderr, "shell: waitpiderorr: %s\n", strerror(errno));
 	}
 }
