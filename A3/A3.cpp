@@ -7,11 +7,15 @@
 
 static int callback(void *data, int argc, char **argv, char **azColName){
    int i;
-   fprintf(stderr, "%s: ", (const char*)data);
+   std::fstream output;
+   output.open("output.txt", std::ios::app);
+   //fprintf(stderr, "%s: ", (const char*)data);
    for(i=0; i<argc; i++){
-      printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+      //printf("%s = %s\t", azColName[i], argv[i] ? argv[i] : "NULL");
+      output << azColName[i] << " = " << argv[i] << std::endl;
    }
-   printf("\n");
+   output << std::endl;
+   output.close();
    return 0;
 }
 
@@ -152,14 +156,23 @@ int main(int argc, char* argv[])
 
     artist.close();
 
+	std::ofstream output;
+	output.open("output.txt");
 
-
+	output << "\ntrack" << std::endl << "_______________\n" << std::endl;
+	output.close();
     sql = "SELECT * FROM track";
     sqlite3_exec(db, sql.c_str(), callback, (void*)data, &zErrMsg);
 
+	output.open("output.txt", std::ios::app);
+	output << "\ncd" << std::endl << "_______________\n" << std::endl;
+	output.close();
     sql = "SELECT * FROM cd";
     sqlite3_exec(db, sql.c_str(), callback, (void*)data, &zErrMsg);
 
+	output.open("output.txt",std::ios::app);
+	output << "\nartist" << std::endl << "_______________\n" << std::endl;
+	output.close();
     sql = "SELECT * FROM artist";
     sqlite3_exec(db, sql.c_str(), callback, (void*)data, &zErrMsg);
 

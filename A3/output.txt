@@ -1,0 +1,250 @@
+
+track
+_______________
+
+cd_id = 1
+track_id = 1
+title = Speak to me
+
+cd_id = 1
+track_id = 2
+title = Breathe
+
+cd_id = 1
+track_id = 3
+title = On the run
+
+cd_id = 1
+track_id = 4
+title = Time
+
+cd_id = 1
+track_id = 5
+title = Great gig in the sky
+
+cd_id = 1
+track_id = 6
+title = Mooney
+
+cd_id = 1
+track_id = 7
+title = Us and them
+
+cd_id = 1
+track_id = 8
+title = Any colour you like
+
+cd_id = 1
+track_id = 9
+title = Brain damage
+
+cd_id = 1
+track_id = 10
+title = Eclipse
+
+cd_id = 2
+track_id = 1
+title = Shine on you crazy diamond
+
+cd_id = 2
+track_id = 2
+title = Welcome to the machine
+
+cd_id = 2
+track_id = 3
+title = Have a cigar
+
+cd_id = 2
+track_id = 4
+title = Wish you were here
+
+cd_id = 2
+track_id = 5
+title = Shine on you crazy diamond pt.2
+
+cd_id = 3
+track_id = 1
+title = Dance on a volcano
+
+cd_id = 3
+track_id = 2
+title = Entangled
+
+cd_id = 3
+track_id = 3
+title = Squonk
+
+cd_id = 3
+track_id = 4
+title = Madman moon
+
+cd_id = 3
+track_id = 5
+title = Robbery assault and battery
+
+cd_id = 3
+track_id = 6
+title = Ripples
+
+cd_id = 3
+track_id = 7
+title = Trick of the tail
+
+cd_id = 3
+track_id = 8
+title = Los Endos
+
+cd_id = 4
+track_id = 1
+title = Melodia Africana (part 1)
+
+cd_id = 4
+track_id = 2
+title = I due fiumi
+
+cd_id = 4
+track_id = 3
+title = In unaltra vita
+
+cd_id = 4
+track_id = 4
+title = Melodia Africana (part 2)
+
+cd_id = 4
+track_id = 5
+title = Stella del mattino
+
+cd_id = 4
+track_id = 6
+title = I giorni
+
+cd_id = 4
+track_id = 7
+title = Samba
+
+cd_id = 4
+track_id = 8
+title = Melodia Africana (part 3)
+
+cd_id = 4
+track_id = 9
+title = La nascita delle cose segrete
+
+cd_id = 4
+track_id = 10
+title = Quel che resta
+
+cd_id = 4
+track_id = 11
+title = Inizio
+
+cd_id = 4
+track_id = 12
+title = Limbo
+
+cd_id = 4
+track_id = 13
+title = Bella notte
+
+cd_id = 4
+track_id = 14
+title = Canzone Africana (part 4)
+
+cd_id = 6
+track_id = 1
+title = Go!
+
+cd_id = 6
+track_id = 2
+title = Northern Star
+
+cd_id = 6
+track_id = 3
+title = Goin Down
+
+cd_id = 6
+track_id = 4
+title = I Turn To You
+
+cd_id = 6
+track_id = 5
+title = If That Were Me
+
+cd_id = 6
+track_id = 6
+title = Never Be The Same Again
+
+cd_id = 6
+track_id = 7
+title = Why
+
+cd_id = 6
+track_id = 8
+title = Suddenly Monday
+
+cd_id = 6
+track_id = 9
+title = Ga Ga
+
+cd_id = 6
+track_id = 10
+title = Be The One
+
+cd_id = 6
+track_id = 11
+title = Closer
+
+cd_id = 6
+track_id = 12
+title = Feel The Sun
+
+
+cd
+_______________
+
+id = 1
+title = Dark Side of the Moon
+artist_id = 1
+catalogue = B000024D4P
+
+id = 2
+title = Wish You Were Here
+artist_id = 1
+catalogue = B000024D4S
+
+id = 3
+title = A Trick of the Tail
+artist_id = 2
+catalogue = B000024EXM
+
+id = 4
+title = Selling England By the Pound
+artist_id = 2
+catalogue = B000024E9M
+
+id = 5
+title = I Giorni
+artist_id = 3
+catalogue = B000071WEV
+
+id = 6
+title = Northern Star
+artist_id = 4
+catalogue = B00004YMST
+
+
+artist
+_______________
+
+id = 1
+name = Pink Floyd
+
+id = 2
+name = Genesis
+
+id = 3
+name = Einaudi
+
+id = 4
+name = Melanie C
+
