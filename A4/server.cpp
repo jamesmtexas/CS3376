@@ -5,6 +5,11 @@
 #include <netinet/in.h>
 #include <string.h>
 #include <unistd.h>
+#include <sqlite3.h>
+#include <vector>
+#include <iostream>
+
+#include "cd.h"
 
 #define MAXLINE 4096 /*max text line length*/
 #define SERV_PORT 3000 /* server port – you need to change this */
@@ -50,7 +55,25 @@ int main (int argc, char **argv) {
 			while ( (n = recv(connfd, buf, MAXLINE,0)) > 0)  {
 				printf("%s","String received from and resent to the client:");
 				puts(buf);
-				//code to handle sql	
+
+				sqlite3 *db;
+				sqlite3_open("music.db", &db);
+
+				sqlite3_stmt *stmt;
+				sqlite3_prepare_v2(db, buf, -1, &stmt, NULL);
+
+				std::vector<CD> cds;
+
+				while (sqlite3_step(stmt) == SQLITE_ROW) {
+					int id = sqlite3_column_int(stmt, 0);
+					const char* title = reinterpret_cast<const char*>(sqlite3_column_text(stmt,1));
+					int artist_id = sqlite3_column_int(stmt, 2);
+					const char* catalogue = reinterpret_cast<const char*>(sqlite3_column_text(stmt,3));
+					cds.push_back(CD(id, title, artist_id, catalogue));
+				}		
+
+				sqlite3_close(db);
+
 				send(connfd, buf, n, 0);
 			}
 		
