@@ -9,7 +9,10 @@
 #include <vector>
 #include <iostream>
 
+#include "table.h"
 #include "cd.h"
+#include "track.h"
+#include "artist.h"
 
 #define MAXLINE 4096 /*max text line length*/
 #define SERV_PORT 3000 /* server port – you need to change this */
@@ -62,23 +65,48 @@ int main (int argc, char **argv) {
 				sqlite3_stmt *stmt;
 				sqlite3_prepare_v2(db, buf, -1, &stmt, NULL);
 
-				std::vector<CD> cds;
+				std::vector<Table*> items;
 
-				while (sqlite3_step(stmt) == SQLITE_ROW) {
-					int id = sqlite3_column_int(stmt, 0);
-					const char* title = reinterpret_cast<const char*>(sqlite3_column_text(stmt,1));
-					int artist_id = sqlite3_column_int(stmt, 2);
-					const char* catalogue = reinterpret_cast<const char*>(sqlite3_column_text(stmt,3));
-					cds.push_back(CD(id, title, artist_id, catalogue));
-				}		
+				//Find out which table we're reading from
+				std::string input = buf;
+
+				if (input.find("cd") != std::string::npos) {
+					while (sqlite3_step(stmt) == SQLITE_ROW) {
+						int id = sqlite3_column_int(stmt, 0);
+						const char *title = reinterpret_cast<const char*>(sqlite3_column_text(stmt,1));
+						int artist_id = sqlite3_column_int(stmt, 2);
+						const char *catalogue = reinterpret_cast<const char*>(sqlite3_column_text(stmt,3));
+						CD *row = new CD(id, title, artist_id, catalogue);
+						items.push_back(row);
+					}			
+				}
+			
+				else if (input.find("track") != std::string::npos) {
+					while (sqlite3_step(stmt) == SQLITE_ROW) {
+						int id = sqlite3_column_int(stmt, 0);
+						int track_id = sqlite3_column_int(stmt, 1);
+						const char *title = reinterpret_cast<const char*>(sqlite3_column_text(stmt,2));
+						Track *row = new Track(id, track_id, title);
+						items.push_back(row);
+					}
+				}
+
+				else if (input.find("artist")!= std::string::npos) {
+					while (sqlite3_step(stmt) == SQLITE_ROW) {
+						int id = sqlite3_column_int(stmt, 0);
+						const char *name = reinterpret_cast<const char*>(sqlite3_column_text(stmt,1));
+						Artist *row = new Artist(id, name);
+						items.push_back(row);
+					}
+				}
 
 				sqlite3_close(db);
 
 				std::string result;
 
-				for(std::vector<CD>::iterator it = cds.begin(); it != cds.end(); ++it) {
-					CD row = *it;
-					result += row.output();
+				for(std::vector<Table*>::iterator it = items.begin(); it != items.end(); ++it) {
+					Table *next = *it;
+					result += next->output();
 				}
 
 				send(connfd, result.c_str(), MAXLINE, 0);
