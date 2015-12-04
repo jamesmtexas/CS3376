@@ -74,7 +74,12 @@ int main (int argc, char **argv) {
 
 				sqlite3_close(db);
 
-				send(connfd, buf, n, 0);
+				for(std::vector<CD>::iterator it = cds.begin(); it != cds.end(); ++it) {
+					CD row = *it;
+					//buf = row.output().c_str();
+					send(connfd, row.output().c_str(), n, 0);
+				}
+
 			}
 		
 			if (n < 0)

@@ -12,6 +12,7 @@ class CD {
 
 	public:
 	CD(int id_parameter, const char *title_parameter, int artist_id_parameter, const char *catalogue_parameter);
+	std::string output();
 };
 
 #endif
