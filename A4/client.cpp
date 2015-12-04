@@ -5,6 +5,7 @@
 #include <netinet/in.h>
 #include <string.h>
 #include <arpa/inet.h>
+#include <iostream>
 
 #define MAXLINE 4096 /*max text line length*/
 #define SERV_PORT 3000 /* server port – you need to change this */
@@ -51,7 +52,8 @@ int main(int argc, char **argv) {          // the argument is the server's IP ad
 		
 		// you need to update the code below to do the required work by client
 		printf("%s", "String received from the server: ");
-		fputs(recvline, stdout);
+		//fputs(recvline, stdout);
+		std::cout << recvline << std::endl;
 	}
 	
 	exit(0);

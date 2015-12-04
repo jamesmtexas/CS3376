@@ -53,7 +53,7 @@ int main (int argc, char **argv) {
 			//close listening socket
 			close (listenfd);
 			while ( (n = recv(connfd, buf, MAXLINE,0)) > 0)  {
-				printf("%s","String received from and resent to the client:");
+				printf("%s","String received from the client:");
 				puts(buf);
 
 				sqlite3 *db;
@@ -74,11 +74,14 @@ int main (int argc, char **argv) {
 
 				sqlite3_close(db);
 
+				std::string result;
+
 				for(std::vector<CD>::iterator it = cds.begin(); it != cds.end(); ++it) {
 					CD row = *it;
-					//buf = row.output().c_str();
-					send(connfd, row.output().c_str(), n, 0);
+					result += row.output();
 				}
+
+				send(connfd, result.c_str(), MAXLINE, 0);
 
 			}
 		
