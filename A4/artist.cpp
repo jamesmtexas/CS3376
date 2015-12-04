@@ -10,7 +10,7 @@ Artist::Artist(int id_parameter, const char *name_parameter) {
 
 std::string Artist::output() {
 	std::string resultant_string;
-	resultant_string += "\nID: " + std::to_string(id); 
+	resultant_string += "\nID: " + std::to_string(static_cast<long long>(id)); 
 	resultant_string += "\nName: " + name; 
 	length = resultant_string.length();
 	return resultant_string;
