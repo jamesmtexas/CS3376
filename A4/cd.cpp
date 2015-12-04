@@ -11,9 +11,9 @@ CD::CD(int id_parameter, const char *title_parameter, int artist_id_parameter, c
 
 std::string CD::output() {
 	std::string resultant_string;
-	resultant_string = "ID: " + id;
-	resultant_string += "Title: " + title;
-	resultant_string += "Artist id: " + artist_id;
-	resultant_string += "Catalogue: " + catalogue; 
+	resultant_string = "\nID: " + id;
+	resultant_string += "\nTitle: " + title;
+	resultant_string += "\nArtist id: " + artist_id;
+	resultant_string += "\nCatalogue: " + catalogue; 
 	return resultant_string;
 }
