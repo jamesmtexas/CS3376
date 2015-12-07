@@ -11,8 +11,8 @@ Track::Track(int id_parameter, int track_id_parameter, const char *title_paramet
 
 std::string Track::output() {
 	std::string resultant_string;
-	resultant_string += "\nID: " + std::to_string(id); 
-	resultant_string += "\nTrack id: " + std::to_string(track_id);
+	resultant_string += "\nID: " + std::to_string(static_cast<long long>(id)); 
+	resultant_string += "\nTrack id: " + std::to_string(static_cast<long long>(track_id));
 	resultant_string += "\nTitle: " + title; 
 	length = resultant_string.length();
 	return resultant_string;
