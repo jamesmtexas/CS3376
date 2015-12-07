@@ -6,9 +6,10 @@
 #include <string.h>
 #include <arpa/inet.h>
 #include <iostream>
+#include <fstream>
 
 #define MAXLINE 4096 /*max text line length*/
-#define SERV_PORT 3000 /* server port – you need to change this */
+#define SERV_PORT 5433 /* server port – you need to change this */
 
 int main(int argc, char **argv) {          // the argument is the server's IP address
 
@@ -42,7 +43,11 @@ int main(int argc, char **argv) {          // the argument is the server's IP ad
 		exit(3);
 	}
 
+	std::ofstream client_log;
+	client_log.open("client_log.txt", std::ios::app);
+
 	while (fgets(sendline, MAXLINE, stdin) != NULL) {
+		client_log << "Request sent to server: " << sendline << std::endl;
 		send(sockfd, sendline, strlen(sendline), 0);
 		if (recv(sockfd, recvline, MAXLINE,0) == 0){
 			//error: server terminated prematurely
@@ -54,7 +59,10 @@ int main(int argc, char **argv) {          // the argument is the server's IP ad
 		printf("%s", "String received from the server: ");
 		//fputs(recvline, stdout);
 		std::cout << recvline << std::endl;
+		client_log << "Result received from the server: " << recvline << std::endl;
 	}
 	
+	client_log.close();
+
 	exit(0);
 }

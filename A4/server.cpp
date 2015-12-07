@@ -8,6 +8,7 @@
 #include <sqlite3.h>
 #include <vector>
 #include <iostream>
+#include <fstream>
 
 #include "table.h"
 #include "cd.h"
@@ -15,7 +16,7 @@
 #include "artist.h"
 
 #define MAXLINE 4096 /*max text line length*/
-#define SERV_PORT 3000 /* server port – you need to change this */
+#define SERV_PORT 5433 /* server port – you need to change this */
 #define LISTENQ 8 /*maximum number of client connections*/
 
 int main (int argc, char **argv) {
@@ -53,11 +54,16 @@ int main (int argc, char **argv) {
 		if ( (childpid = fork ()) == 0 ) {          //if it’s 0, it’s child process
 			printf ("%s\n","Child created for dealing with client requests");
 
+			std::ofstream server_log;
+			server_log.open("server_log.txt",std::ios::app);	
+
 			//close listening socket
 			close (listenfd);
 			while ( (n = recv(connfd, buf, MAXLINE,0)) > 0)  {
 				printf("%s","String received from the client:");
 				puts(buf);
+				
+				server_log << "Request from client: " << buf << std::endl;
 
 				sqlite3 *db;
 				sqlite3_open("music.db", &db);
@@ -109,10 +115,14 @@ int main (int argc, char **argv) {
 					result += next->output();
 				}
 
+				server_log << "Result of request: " << result << std::endl;
+
 				send(connfd, result.c_str(), MAXLINE, 0);
 
 			}
-		
+	
+			log.close();
+	
 			if (n < 0)
 				printf("%s\n", "Read error");
 		
