@@ -121,7 +121,7 @@ int main (int argc, char **argv) {
 
 			}
 	
-			log.close();
+			server_log.close();
 	
 			if (n < 0)
 				printf("%s\n", "Read error");
