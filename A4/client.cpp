@@ -46,6 +46,8 @@ int main(int argc, char **argv) {          // the argument is the server's IP ad
 	std::ofstream client_log;
 	client_log.open("client_log.txt", std::ios::app);
 
+	std::cout << "Enter request: ";
+
 	while (fgets(sendline, MAXLINE, stdin) != NULL) {
 		client_log << "Request sent to server: " << sendline << std::endl;
 		send(sockfd, sendline, strlen(sendline), 0);
@@ -55,11 +57,10 @@ int main(int argc, char **argv) {          // the argument is the server's IP ad
 			exit(4);
 		}
 		
-		// you need to update the code below to do the required work by client
-		printf("%s", "String received from the server: ");
-		//fputs(recvline, stdout);
+		printf("%s", "\nString received from the server: ");
 		std::cout << recvline << std::endl;
 		client_log << "Result received from the server: " << recvline << std::endl;
+		std::cout << "\nEnter request: ";
 	}
 	
 	client_log.close();
