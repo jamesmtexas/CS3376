@@ -60,7 +60,7 @@ int main (int argc, char **argv) {
 			//close listening socket
 			close (listenfd);
 			while ( (n = recv(connfd, buf, MAXLINE,0)) > 0)  {
-				printf("%s","String received from the client:");
+				printf("%s","String received from the client: ");
 				puts(buf);
 				
 				server_log << "Request from client: " << buf << std::endl;
@@ -116,6 +116,7 @@ int main (int argc, char **argv) {
 				}
 
 				server_log << "Result of request: " << result << std::endl;
+				std::cout << "Result of request: " << result << std::endl;
 
 				send(connfd, result.c_str(), MAXLINE, 0);
 
