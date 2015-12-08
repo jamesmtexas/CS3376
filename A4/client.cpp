@@ -9,7 +9,7 @@
 #include <fstream>
 
 #define MAXLINE 4096 /*max text line length*/
-#define SERV_PORT 5433 /* server port – you need to change this */
+#define SERV_PORT 2800 /* server port – you need to change this */
 
 int main(int argc, char **argv) {          // the argument is the server's IP address
 

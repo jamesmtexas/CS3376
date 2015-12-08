@@ -16,7 +16,7 @@
 #include "artist.h"
 
 #define MAXLINE 4096 /*max text line length*/
-#define SERV_PORT 5433 /* server port – you need to change this */
+#define SERV_PORT 2800 /* server port – you need to change this */
 #define LISTENQ 8 /*maximum number of client connections*/
 
 int main (int argc, char **argv) {
