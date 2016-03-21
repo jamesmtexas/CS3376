@@ -6,3 +6,8 @@ Assignment 2
 Assignment 3
 
   Inventory management program using sqlite
+
+
+Assignment 4
+
+  Add networking to inventory management program using unix sockets
